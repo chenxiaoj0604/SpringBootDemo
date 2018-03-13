@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link th:href="@{/css/1.css}" rel="stylesheet"/>
+</head>
+<style>
+    .table1 tr td{
+        width: 60px;
+    }
+</style>
+<body>
+<p th:text="'Hello, ' + ${title}" />
+<div>
+    <table class="table1">
+        <tr th:each="u : ${uList}">
+            <td th:text="'姓名'"/>
+            <td th:text="${u.name}"/>
+            <td th:text="'年龄'"/>
+            <td th:text="${u.age}"/>
+            <td><a th:href="@{deleteUser(id=${u.id})}">删除</a></td>
+            <td>
+                <form th:action="@{updateUser}" method="post">
+                    <td><input type="text" th:name="name" th:value="${u.name}"/></td>
+                    <td><input type="text" th:name="age" th:value="${u.age}"/>
+                        <input type="hidden" name="id" th:value="${u.id}"/></td>
+                    <td><input type="submit" th:value="提交"/></td>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+<hr/>
+<form th:action="@{addUser}" method="post">
+    <input type="text" name="name"/>
+    <input type="text" name="age"/>
+    <input type="submit" value="提交"/>
+</form>
+<hr/>
+
+</body>
+</html>
