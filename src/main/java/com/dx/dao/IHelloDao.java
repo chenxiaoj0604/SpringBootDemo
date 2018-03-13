@@ -1,8 +1,6 @@
 package com.dx.dao;
 
 import com.dx.entity.User;
-import org.apache.ibatis.annotations.Insert;
-
 import java.util.List;
 
 /**
