@@ -18,12 +18,13 @@
             <td th:text="${u.name}"/>
             <td th:text="'年龄'"/>
             <td th:text="${u.age}"/>
-            <td><a th:href="@{deleteUser(id=${u.id})}">删除</a></td>
+            <td><a th:href="@{deleteUser(id=${u.id},pn=${pageInfo.pageNum})}">删除</a></td>
             <td>
                 <form th:action="@{updateUser}" method="post">
                     <td><input type="text" th:name="name" th:value="${u.name}"/></td>
                     <td><input type="text" th:name="age" th:value="${u.age}"/>
-                        <input type="hidden" name="id" th:value="${u.id}"/></td>
+                        <input type="hidden" name="id" th:value="${u.id}"/>
+                        <input type="hidden" name="pn" th:value="${pageInfo.pageNum}"/></td>
                     <td><input type="submit" th:value="提交"/></td>
                 </form>
             </td>

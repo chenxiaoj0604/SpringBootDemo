@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -29,7 +30,7 @@ public class HelloController {
 
     @GetMapping(value = "hello")
     public String hello(Model model, @RequestParam(required = false,defaultValue = "1",value = "pn")Integer pn){
-        PageHelper.startPage(pn,3);
+        PageHelper.startPage(pn,5);
         List<User> uList = helloService.getAllUser();
         PageInfo pageInfo = new PageInfo<>(uList,5);
         model.addAttribute("title","hello");
@@ -50,7 +51,8 @@ public class HelloController {
     @GetMapping(value = "deleteUser")
     public String deleteUser(HttpServletRequest request){
         helloService.deleteUserById(Integer.valueOf(request.getParameter("id")));
-        return "redirect:/hello";
+        Integer pn = Integer.valueOf(request.getParameter("pn"));
+        return "redirect:/hello?pn="+pn;
     }
 
     @PostMapping(value = "updateUser")
@@ -59,8 +61,9 @@ public class HelloController {
         user.setId(Integer.valueOf(request.getParameter("id")));
         user.setName(request.getParameter("name"));
         user.setAge(Integer.valueOf(request.getParameter("age")));
+        Integer pn = Integer.valueOf(request.getParameter("pn"));
         helloService.updateUserById(user);
-        return "redirect:/hello";
+        return "redirect:/hello?pn="+pn;
     }
 
 
