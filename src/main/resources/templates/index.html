@@ -12,9 +12,8 @@
 </style>
 <body>
 <p th:text="'Hello, ' + ${title}" />
-<div>
     <table class="table1">
-        <tr th:each="u : ${uList}">
+        <tr th:each="u : ${pageInfo.list}">
             <td th:text="'姓名'"/>
             <td th:text="${u.name}"/>
             <td th:text="'年龄'"/>
@@ -30,7 +29,18 @@
             </td>
         </tr>
     </table>
-</div>
+    <table>
+        <tr>
+            <td><p th:text="'当前第'+ ${pageInfo.pageNum}+ '页.总共' + ${pageInfo.pages} + '页.一共' + ${pageInfo.total} + '条记录' "/></td>
+            <td><a th:href="@{/hello(pn=1)}"> 首页 </a></td>
+            <td th:if="${pageInfo.hasPreviousPage}"><a th:href="@{/hello(pn=${pageInfo.pageNum-1})}" th:text="《"/></td>
+            <td th:each="num : ${pageInfo.navigatepageNums}">
+                <td th:if="${num} eq ${pageInfo.pageNum}"><a href="#" style="color: red" th:text="${num}"/></td>
+                <td th:if="${num} ne ${pageInfo.pageNum}"><a th:href="@{/hello(pn=${num})}" th:text="${num}"/></td>
+            </td>
+            <td th:if="${pageInfo.hasNextPage}"><a th:href="@{/hello(pn=${pageInfo.pageNum+1})}" th:text="》"/></td>
+        </tr>
+    </table>
 <hr/>
 <form th:action="@{addUser}" method="post">
     <input type="text" name="name"/>

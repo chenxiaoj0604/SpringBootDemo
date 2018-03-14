@@ -2,11 +2,14 @@ package com.dx.web;
 
 import com.dx.entity.User;
 import com.dx.service.IHelloService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -25,10 +28,13 @@ public class HelloController {
     private IHelloService helloService;
 
     @GetMapping(value = "hello")
-    public String hello(Model model){
+    public String hello(Model model, @RequestParam(required = false,defaultValue = "1",value = "pn")Integer pn){
+        PageHelper.startPage(pn,3);
         List<User> uList = helloService.getAllUser();
+        PageInfo pageInfo = new PageInfo<>(uList,5);
         model.addAttribute("title","hello");
-        model.addAttribute("uList",uList);
+        //model.addAttribute("uList",uList);
+        model.addAttribute("pageInfo",pageInfo);
         return "index";
     }
 
